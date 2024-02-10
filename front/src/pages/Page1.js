@@ -75,7 +75,7 @@ export default function Page1() {
         <div className="justify-center items-center flex flex-col p-4">
             <Button onClick={handleOpen}>Add me</Button>
             <LocationShow/>
-            <Dialog open={open} size="xs" handler={handleOpen}>
+            <Dialog open={open} size="xs" as="form" handler={handleOpen}>
                 <div className="flex items-center justify-between">
                     <DialogHeader className="flex flex-col items-start">
                         {" "}
@@ -103,15 +103,15 @@ export default function Page1() {
                         <Typography className="-mb-1" color="blue-gray" variant="h6">
                             Username
                         </Typography>
-                        <Input label="Username" name="username"  value={data["username"]} onChange={handleDataChange}/>
+                        <Input label="Username" name="username"  value={data["username"]} onChange={handleDataChange} required/>
                         <Typography className="-mb-1" color="blue-gray" variant="h6">
                             UserID
                         </Typography>
-                        <Input label="UserID" name="userid" value={data["userid"]} onChange={handleDataChange}/>
+                        <Input label="UserID" name="userid" value={data["userid"]} onChange={handleDataChange} required/>
                         <Typography className="-mb-1" color="blue-gray" variant="h6">
                             Type
                         </Typography>
-                        <Input label="Type" name="type" value={data["type"]} onChange={handleDataChange}/>
+                        <Input label="Type" name="type" value={data["type"]} onChange={handleDataChange} required/>
                         <Typography className="-mb-1" color="blue-gray" variant="h6">
                             Latitude
                         </Typography>
@@ -126,14 +126,9 @@ export default function Page1() {
                     <Button variant="text" color="gray" onClick={handleOpen}>
                         cancel
                     </Button>
-                    {!isSubmitting?
-                    <Button variant="gradient" color="gray" onClick={handleSubmit} >
-                        Add
+                    <Button variant="gradient" color="gray" onClick={handleSubmit} disabled={isSubmitting?true:false}>
+                        {isSubmitting?"...":"Add"}
                     </Button>
-                    :
-                    <Button variant="gradient" color="gray" disabled>
-                        Add
-                    </Button>}
                 </DialogFooter>
             </Dialog>
         </div>
