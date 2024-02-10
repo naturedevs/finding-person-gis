@@ -14,7 +14,7 @@ import LocationShow from "../components/LocationShow";
 
 import axios from 'axios';
 
-const base_url = "http://localhost:3001/api/"
+const base_url = "http://localhost:3001/"
 console.log(process.env)
 export default function Page1() {
     const [open, setOpen] = React.useState(false);
@@ -39,7 +39,7 @@ export default function Page1() {
 
         const configuration = {
             method: 'post',
-            url: base_url + 'adduser',
+            url: base_url + 'profiles/create',
             data
         };
         window.temp = base_url
