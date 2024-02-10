@@ -13,7 +13,7 @@ var { Pool } = require('pg');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '3001');
 app.set('port', port);
 
 /**
@@ -40,18 +40,6 @@ var server = http.createServer(app);
 // if (pool) {
 //   console.log("okok");
 // }
-
-app.get('/', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM profiles');
-    res.json(result.rows);
-    console.log(result.rows);
-  } catch (err) {
-    console.error(err);
-    console.log(err);
-    res.status(500).send('Internal Server Error');
-  }
-});
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

@@ -20,7 +20,7 @@ const getProfileById = (request, response) => {
     const id = request.body.id;
     console.log(id);
 
-    pool.query('SELECT * FROM profiles WHERE user_id = $1', [id], (error, results) => {
+    pool.query('SELECT * FROM profiles WHERE userid = $1', [id], (error, results) => {
         if (error) {
             response.status(200).json({result: false})
             throw error
@@ -30,13 +30,15 @@ const getProfileById = (request, response) => {
 }
 
 const createProfile = (request, response) => {
-    const { user_id, user_name, type, lati_tude, long_tude } = request.body
+    console.log(request.body);
+    const { userid, username, type, latitude, longitude } = request.body;
+    
 
-    pool.query('SELECT * FROM profiles WHERE user_id = $1', [user_id], (error, results) => {
+    pool.query('SELECT * FROM profiles WHERE userid = $1', [userid], (error, results) => {
         console.log("1", results.rows.length);
         if (results.rows.length == 0) {
             console.log("2");
-            pool.query('INSERT INTO profiles (user_id, user_name, type, lati_tude, long_tude) VALUES ($1, $2, $3, $4, $5)', [user_id, user_name, type, lati_tude, long_tude], (error, results) => {
+            pool.query('INSERT INTO profiles (userid, username, type, latitude, longitude) VALUES ($1, $2, $3, $4, $5)', [userid, username, type, latitude, longitude], (error, results) => {
                 if (error) {
                 throw error
                 }
@@ -46,16 +48,16 @@ const createProfile = (request, response) => {
             response.status(201).send({result: false})
         }
     })
-
+//
 }
 
 const updateProfile = (request, response) => {
     const id = request.body.uid;
-    const { uid, user_id, user_name, type, lati_tude, long_tude } = request.body
+    const { uid, userid, username, type, latitude, longitude } = request.body
 
     pool.query(
-        'UPDATE profiles SET user_id = $2, user_name = $3, type = $4, lati_tude = $5, long_tude = $6 WHERE uid = $1',
-        [uid, user_id, user_name, type, lati_tude, long_tude],
+        'UPDATE profiles SET userid = $2, username = $3, type = $4, latitude = $5, longitude = $6 WHERE uid = $1',
+        [uid, userid, username, type, latitude, longitude],
         (error, results) => {
             if (error) {
                 response.status(200).json({result: false})
@@ -67,9 +69,9 @@ const updateProfile = (request, response) => {
 }
 
 const deleteProfile = (request, response) => {
-    const id = request.body.user_id;
+    const id = request.body.userid;
 
-    pool.query('DELETE FROM profiles WHERE user_id = $1', [id], (error, results) => {
+    pool.query('DELETE FROM profiles WHERE userid = $1', [id], (error, results) => {
         if (error) {
             response.status(200).json({result: false})
             throw error
